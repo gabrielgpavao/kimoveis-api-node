@@ -4,7 +4,7 @@ import { ZodTypeAny } from 'zod';
 import { AppDataSource } from '../data-source';
 import { User } from '../entities';
 import { AppError } from '../errors';
-import { tUserRepo } from '../interfaces/users';
+import { tUserRepo } from '../interfaces/users/users.interfaces';
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
 
@@ -66,7 +66,7 @@ function validateAdminPermissionMiddleware (request: Request, response: Response
 	next()
 }
 
-async function validateUserId (request: Request, response: Response, next: NextFunction): Promise<void> {
+async function validateUserIdMiddleware (request: Request, response: Response, next: NextFunction): Promise<void> {
 	const userRepository: tUserRepo = AppDataSource.getRepository(User)
 
 	const findUserId: User | null = await userRepository.findOneBy({ id: Number(request.params.id) })
@@ -83,5 +83,5 @@ export {
 	verifyEmailDuplicityMiddleware,
 	validateTokenMiddleware,
 	validateAdminPermissionMiddleware,
-	validateUserId
+	validateUserIdMiddleware
 }
