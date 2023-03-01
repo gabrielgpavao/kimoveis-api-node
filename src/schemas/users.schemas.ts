@@ -19,8 +19,11 @@ const outputUserDataSchema = inputUserDataSchema.omit({ password: true }).extend
 
 const usersListSchema = outputUserDataSchema.array()
 
+const updateUserDataSchema = inputUserDataSchema.omit({ admin: true }).deepPartial()
+
 export {
 	inputUserDataSchema,
 	outputUserDataSchema,
-	usersListSchema
+	usersListSchema,
+	updateUserDataSchema
 }

@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { tOutputUserData } from '../../interfaces/users'
 import { createUserService } from '../../services/users/createUser.service'
 import { getAllUsersService } from '../../services/users/getAllUsers.service'
+import { updateUserService } from '../../services/users/updateUser.service'
 
 async function createUserController (request: Request, response: Response): Promise<Response> {
 	const newUser = await createUserService(request.body)
@@ -15,7 +16,16 @@ async function getAllUsersController (request: Request, response: Response): Pro
 	return response.status(200).json(userList)
 }
 
+async function updateUserController (request: Request, response: Response): Promise<Response> {
+	const userId: number = Number(request.params.id)
+
+	const updatedUser = await updateUserService(userId, request.body)
+	
+	return response.status(200).json(updatedUser)
+}
+
 export {
 	createUserController,
-	getAllUsersController
+	getAllUsersController,
+	updateUserController
 }

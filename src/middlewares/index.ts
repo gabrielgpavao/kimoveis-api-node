@@ -52,9 +52,26 @@ function validateTokenMiddleware (request: Request, response: Response, next: Ne
 function validateAdminPermissionMiddleware (request: Request, response: Response, next: NextFunction): void {
 	const isAdmin: boolean = request.userPermission.admin
 
-	if (!isAdmin) {
+	if (request.method === 'GET' && !isAdmin) {
 		throw new AppError('Insufficient permission', 403)
+
+	} else if (request.method === 'PATCH' || request.method === 'DELETE') {
+		if (Number(request.params.id) !== request.userPermission.id && !isAdmin) {
+			throw new AppError('Insufficient permission', 403)
+		}
 	}
+
+	next()
+}
+
+async function validateUserId (request: Request, response: Response, next: NextFunction): Promise<void> {
+	const userRepository: tUserRepo = AppDataSource.getRepository(User)
+
+	const findUserId: User | null = await userRepository.findOneBy({ id: Number(request.params.id) })
+
+	if (!findUserId) {
+		throw new AppError('User not found', 404)
+	}	
 
 	next()
 }
@@ -63,5 +80,6 @@ export {
 	validateInputDataMiddleware,
 	verifyEmailDuplicityMiddleware,
 	validateTokenMiddleware,
-	validateAdminPermissionMiddleware
+	validateAdminPermissionMiddleware,
+	validateUserId
 }
