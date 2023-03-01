@@ -5,14 +5,16 @@ import { AppDataSource } from '../data-source';
 import { User } from '../entities';
 import { AppError } from '../errors';
 import { tUserRepo } from '../interfaces/users';
+import jwt from 'jsonwebtoken'
+import 'dotenv/config'
 
 const validateInputDataMiddleware = (schema: ZodTypeAny) => (request: Request, response: Response, next: NextFunction): void => {
-	schema.parse(request.body)
+	request.body = schema.parse(request.body)
 
 	next()
 }
 
-async function verifyEmailDuplicityMiddleware (request: Request, response: Response, next: NextFunction) {
+async function verifyEmailDuplicityMiddleware (request: Request, response: Response, next: NextFunction): Promise<void> {
 	if (request.body.email && typeof request.body.email === 'string') {
 		const userRepository: tUserRepo = AppDataSource.getRepository(User)
 
@@ -26,7 +28,40 @@ async function verifyEmailDuplicityMiddleware (request: Request, response: Respo
 	next()
 }
 
+function validateTokenMiddleware (request: Request, response: Response, next: NextFunction): void {
+	const token: string | undefined = request.headers.authorization?.split(' ')[1] || undefined
+
+	if (!token) {
+		throw new AppError('Missing bearer token', 401)
+	}
+
+	jwt.verify(token, process.env.SECRET_KEY!, (error, decoded: any) => {
+		if (error) {
+			throw new AppError(error.message, 401)
+		}
+
+		request.userPermission = {
+			id: Number(decoded.sub),
+			admin: decoded.admin
+		}
+	})
+
+	next()
+}
+
+function validateAdminPermissionMiddleware (request: Request, response: Response, next: NextFunction): void {
+	const isAdmin: boolean = request.userPermission.admin
+
+	if (!isAdmin) {
+		throw new AppError('Insufficient permission', 403)
+	}
+
+	next()
+}
+
 export {
 	validateInputDataMiddleware,
-	verifyEmailDuplicityMiddleware
+	verifyEmailDuplicityMiddleware,
+	validateTokenMiddleware,
+	validateAdminPermissionMiddleware
 }

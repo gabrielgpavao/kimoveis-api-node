@@ -17,7 +17,10 @@ const outputUserDataSchema = inputUserDataSchema.omit({ password: true }).extend
 	deletedAt: z.string().nullable()
 })
 
+const usersListSchema = outputUserDataSchema.array()
+
 export {
 	inputUserDataSchema,
-	outputUserDataSchema
+	outputUserDataSchema,
+	usersListSchema
 }
