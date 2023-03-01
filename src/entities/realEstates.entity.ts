@@ -14,10 +14,10 @@ export class RealEstate {
 	@Column({ type: 'integer' })
 	size: number;
 	
-	@CreateDateColumn({ type: 'datetime' })
+	@CreateDateColumn({ type: 'timestamp' })
 	createdAt: Date | string;
 
-	@UpdateDateColumn({ type: 'datetime' })
+	@UpdateDateColumn({ type: 'timestamp' })
 	updatedAt: Date | string;
 
 	@Column({ type: 'boolean', default: false })

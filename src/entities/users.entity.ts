@@ -18,13 +18,13 @@ export class User {
 	@Column({ type: 'boolean', default: false })
 	admin: boolean;
 
-	@CreateDateColumn({ type: 'datetime' })
+	@CreateDateColumn({ type: 'timestamp' })
 	createdAt: Date | string;
 
-	@UpdateDateColumn({ type: 'datetime' })
+	@UpdateDateColumn({ type: 'timestamp' })
 	updatedAt: Date | string;
 
-	@DeleteDateColumn({ type: 'datetime' })
+	@DeleteDateColumn({ type: 'timestamp' })
 	deletedAt: Date | string;
 
 	@OneToMany(() => Schedule, (schedule) => schedule.user)
