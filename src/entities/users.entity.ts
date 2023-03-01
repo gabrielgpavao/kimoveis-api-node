@@ -6,7 +6,7 @@ export class User {
 	@PrimaryGeneratedColumn('increment')
 	id: number;
 
-	@Column({ type: 'varchar', length: 45, unique: true })
+	@Column({ type: 'varchar', length: 45 })
 	name: string;
 
 	@Column({ type: 'varchar', unique: true})
@@ -18,13 +18,13 @@ export class User {
 	@Column({ type: 'boolean', default: false })
 	admin: boolean;
 
-	@CreateDateColumn({ type: 'timestamp' })
+	@CreateDateColumn({ type: 'date' })
 	createdAt: Date | string;
 
-	@UpdateDateColumn({ type: 'timestamp' })
+	@UpdateDateColumn({ type: 'date' })
 	updatedAt: Date | string;
 
-	@DeleteDateColumn({ type: 'timestamp' })
+	@DeleteDateColumn({ type: 'date' })
 	deletedAt: Date | string;
 
 	@OneToMany(() => Schedule, (schedule) => schedule.user)
