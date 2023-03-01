@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { tOutputUserData } from '../../interfaces/users'
 import { createUserService } from '../../services/users/createUser.service'
+import { deleteUserService } from '../../services/users/deleteUser.service'
 import { getAllUsersService } from '../../services/users/getAllUsers.service'
 import { updateUserService } from '../../services/users/updateUser.service'
 
@@ -24,8 +25,17 @@ async function updateUserController (request: Request, response: Response): Prom
 	return response.status(200).json(updatedUser)
 }
 
+async function deleteUserController (request: Request, response: Response): Promise<Response> {
+	const userId: number = Number(request.params.id)
+	
+	await deleteUserService(userId)
+	
+	return response.status(204).json()
+}
+
 export {
 	createUserController,
 	getAllUsersController,
-	updateUserController
+	updateUserController,
+	deleteUserController
 }

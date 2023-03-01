@@ -52,10 +52,12 @@ function validateTokenMiddleware (request: Request, response: Response, next: Ne
 function validateAdminPermissionMiddleware (request: Request, response: Response, next: NextFunction): void {
 	const isAdmin: boolean = request.userPermission.admin
 
-	if (request.method === 'GET' && !isAdmin) {
-		throw new AppError('Insufficient permission', 403)
+	if (request.method === 'GET' || request.method === 'DELETE') {
+		if (!isAdmin) {
+			throw new AppError('Insufficient permission', 403)
+		}
 
-	} else if (request.method === 'PATCH' || request.method === 'DELETE') {
+	} else if (request.method === 'PATCH') {
 		if (Number(request.params.id) !== request.userPermission.id && !isAdmin) {
 			throw new AppError('Insufficient permission', 403)
 		}
