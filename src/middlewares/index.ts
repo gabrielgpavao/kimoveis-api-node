@@ -87,38 +87,10 @@ async function validateUserIdMiddleware (request: Request, response: Response, n
 	next()
 }
 
-async function verifyDuplicityAddressMiddleware (request: Request, response: Response, next: NextFunction): Promise<void> {
-	const addressRepository: tAddressRepo = AppDataSource.getRepository(Address)
-	
-	const { street, number, zipCode, city, state } = request.body.address
-	
-	const findAddress = number ? await addressRepository.findOne({ where: {
-		street: street,
-		zipCode: zipCode,
-		state: state,
-		city: city,
-		number: number
-	}}) : await addressRepository.findOne({ where: {
-		street: street,
-		zipCode: zipCode,
-		state: state,
-		city: city
-	}})
-	
-	console.log(request.body)
-	
-	if (findAddress) {
-		throw new AppError('Address already exists', 409)
-	}
-
-	next()
-}
-
 export {
 	validateInputDataMiddleware,
 	verifyEmailDuplicityMiddleware,
 	validateTokenMiddleware,
 	validateAdminPermissionMiddleware,
-	validateUserIdMiddleware,
-	verifyDuplicityAddressMiddleware
+	validateUserIdMiddleware
 }
