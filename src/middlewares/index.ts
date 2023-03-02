@@ -52,6 +52,10 @@ function validateTokenMiddleware (request: Request, response: Response, next: Ne
 function validateAdminPermissionMiddleware (request: Request, response: Response, next: NextFunction): void {
 	const isAdmin: boolean = request.userPermission.admin
 
+	if (request.baseUrl === '/categories' && !isAdmin) {
+		throw new AppError('Insufficient permission', 403)
+	}
+
 	if (request.method === 'GET' || request.method === 'DELETE') {
 		if (!isAdmin) {
 			throw new AppError('Insufficient permission', 403)
@@ -62,7 +66,7 @@ function validateAdminPermissionMiddleware (request: Request, response: Response
 			throw new AppError('Insufficient permission', 403)
 		}
 	}
-
+	
 	next()
 }
 
