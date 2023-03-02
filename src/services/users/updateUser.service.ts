@@ -1,6 +1,6 @@
 import { AppDataSource } from '../../data-source';
 import { User } from '../../entities';
-import { tOutputUserData, tUpdateUserData, tUserRepo } from '../../interfaces/users';
+import { tOutputUserData, tUpdateUserData, tUserRepo } from '../../interfaces/users/users.interfaces';
 import { outputUserDataSchema } from '../../schemas/users.schemas';
 
 export async function updateUserService (userId: number, userData: tUpdateUserData): Promise<tOutputUserData> {

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { tOutputUserData } from '../../interfaces/users'
+import { tOutputUserData } from '../../interfaces/users/users.interfaces'
 import { createUserService } from '../../services/users/createUser.service'
 import { deleteUserService } from '../../services/users/deleteUser.service'
 import { getAllUsersService } from '../../services/users/getAllUsers.service'
