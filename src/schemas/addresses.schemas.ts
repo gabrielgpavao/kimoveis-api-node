@@ -1,18 +1,18 @@
 import { z } from 'zod';
 
-const inputAdressDataSchema = z.object({
+const inputAddressDataSchema = z.object({
 	street: z.string().max(45),
 	zipCode: z.string().max(8),
-	number: z.string().nullish(),
+	number: z.string().max(6).nullish(),
 	city: z.string().max(20),
 	state: z.string().max(2)
 })
 
-const outputAdressDataSchema = inputAdressDataSchema.extend({
+const outputAddressDataSchema = inputAddressDataSchema.extend({
 	id: z.number()
 })
 
 export {
-	inputAdressDataSchema, 
-	outputAdressDataSchema
+	inputAddressDataSchema, 
+	outputAddressDataSchema
 }
