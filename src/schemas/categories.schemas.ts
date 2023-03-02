@@ -8,7 +8,10 @@ const outputCategoryDataSchema = inputCategoryDataSchema.extend({
 	id: z.number()
 })
 
+const categoriesListSchema = outputCategoryDataSchema.array()
+
 export {
 	inputCategoryDataSchema,
-	outputCategoryDataSchema
+	outputCategoryDataSchema,
+	categoriesListSchema
 }
