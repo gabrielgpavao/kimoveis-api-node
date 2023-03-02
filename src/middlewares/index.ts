@@ -56,6 +56,10 @@ function validateAdminPermissionMiddleware (request: Request, response: Response
 		throw new AppError('Insufficient permission', 403)
 	}
 
+	if (request.baseUrl === '/realEstate' && !isAdmin) {
+		throw new AppError('Insufficient permission', 403)
+	}
+	
 	if (request.method === 'GET' || request.method === 'DELETE') {
 		if (!isAdmin) {
 			throw new AppError('Insufficient permission', 403)

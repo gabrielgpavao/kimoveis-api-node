@@ -1,9 +1,8 @@
 import { AppDataSource } from '../../data-source';
 import { Category, RealEstate } from '../../entities';
 import { AppError } from '../../errors';
-import { tCategoryRepo, tOutputCategoryData } from '../../interfaces/categories/categories.interfaces';
+import { tCategoryRepo } from '../../interfaces/categories/categories.interfaces';
 import { tRealEstateRepo } from '../../interfaces/realEstates/realEstates.interfaces';
-import { categoriesListSchema } from '../../schemas/categories.schemas';
 import { realEstatesListSchema } from '../../schemas/realEstate.schemas';
 
 export async function getRealEstatesByCategoryService (categoryId: number) {
