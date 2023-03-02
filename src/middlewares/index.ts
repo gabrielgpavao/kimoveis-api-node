@@ -2,11 +2,12 @@ import { NextFunction } from 'connect';
 import { Request, Response } from 'express';
 import { ZodTypeAny } from 'zod';
 import { AppDataSource } from '../data-source';
-import { User } from '../entities';
+import { Address, User } from '../entities';
 import { AppError } from '../errors';
 import { tUserRepo } from '../interfaces/users/users.interfaces';
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
+import { tAddressRepo } from '../interfaces/realEstates/realEstates.interfaces';
 
 const validateInputDataMiddleware = (schema: ZodTypeAny) => (request: Request, response: Response, next: NextFunction): void => {
 	request.body = schema.parse(request.body)
