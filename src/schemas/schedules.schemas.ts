@@ -21,6 +21,12 @@ const inputScheduleDataSchema = z.object({
 	realEstateId: z.number().int()
 })
 
+const schedulesList = z.array(inputScheduleDataSchema.extend({
+	id: z.number().int(),
+	userId: z.number().int()
+}))
+
 export {
-	inputScheduleDataSchema
+	inputScheduleDataSchema,
+	schedulesList
 }
