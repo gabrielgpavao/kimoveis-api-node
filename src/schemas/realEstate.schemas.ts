@@ -18,10 +18,15 @@ const outputRealEstateDataSchema = inputRealEstateDataSchema.omit({ categoryId: 
 	updatedAt: z.string()
 })
 
-const realEstatesListSchema = outputRealEstateDataSchema.array()
+const realEstatesListSchema = z.array(outputRealEstateDataSchema.omit({ address: true, category: true }))
+
+const realEstatesByCategorySchema = outputCategoryDataSchema.extend({
+	realEstate: realEstatesListSchema
+})
 
 export {
 	inputRealEstateDataSchema,
 	outputRealEstateDataSchema,
-	realEstatesListSchema
+	realEstatesListSchema,
+	realEstatesByCategorySchema
 }
