@@ -1,12 +1,9 @@
-import { hashSync } from 'bcryptjs';
 import { z } from 'zod';
 
 const inputUserDataSchema = z.object({
 	name: z.string().max(45, 'String must contain at most 45 character(s)'),
 	email: z.string().email('Invalid email'),
-	password: z.string().max(120, 'String must contain at most 120 character(s)').transform((password) => {
-		return hashSync(password, 10)
-	}),
+	password: z.string().max(120, 'String must contain at most 120 character(s)'),
 	admin: z.boolean().default(false)
 })
 
