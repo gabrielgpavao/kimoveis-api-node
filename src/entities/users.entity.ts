@@ -1,8 +1,18 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { getRounds, hashSync } from 'bcryptjs';
+import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Schedule } from './schedules.entity';
 
 @Entity('users')
 export class User {
+	@BeforeInsert()
+	@BeforeUpdate()
+	hashPassword () {
+		const isEncrypted = getRounds(this.password)
+		if (!isEncrypted) {
+			this.password = hashSync(this.password, 10)
+		}
+	}
+	
 	@PrimaryGeneratedColumn('increment')
 	id: number;
 
