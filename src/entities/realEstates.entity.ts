@@ -31,5 +31,5 @@ export class RealEstate {
 	category: Category;
 
 	@OneToMany(() => Schedule, (schedule) => schedule.realEstate)
-	schedules: Schedule;
+	schedule: Schedule;
 }
