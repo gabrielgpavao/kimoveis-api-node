@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { tInputCategoryData, tOutputCategoryData } from '../../interfaces/categories/categories.interfaces';
+import { tInputCategoryData, tOutputCategoryData, tRealEstatesByCategory } from '../../interfaces/categories/categories.interfaces';
 import { inputCategoryDataSchema } from '../../schemas/categories.schemas';
 import { createCategoriesService } from '../../services/categories/createCategories.service';
 import { getAllCategoriesService } from '../../services/categories/getAllCategories.service';
@@ -22,7 +22,7 @@ async function getAllCategoriesController (request: Request, response: Response)
 async function getRealEstatesByCategoryController (request: Request, response: Response): Promise<Response> {
 	const categoryId: number = Number(request.params.id)
 	
-	const realEstatesList = await getRealEstatesByCategoryService(categoryId)
+	const realEstatesList: tRealEstatesByCategory = await getRealEstatesByCategoryService(categoryId)
 	
 	return response.status(200).json(realEstatesList)
 }
