@@ -18,7 +18,7 @@ export async function getSchedulesService (realEstateId: number) {
 	const findSchedules = realEstateRepository.createQueryBuilder('real_estate')
 		.innerJoinAndSelect('real_estate.category', 'category')
 		.innerJoinAndSelect('real_estate.address', 'address')
-		.innerJoinAndSelect('real_estate.schedule', 'schedule')
+		.innerJoinAndSelect('real_estate.schedules', 'schedule')
 		.innerJoinAndSelect('schedule.user', 'user')
 		.where('schedule."realEstateId" = :id', { id: realEstateId })
 		.getOne()
