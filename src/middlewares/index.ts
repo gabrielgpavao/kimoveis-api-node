@@ -2,11 +2,12 @@ import { NextFunction } from 'connect';
 import { Request, Response } from 'express';
 import { ZodTypeAny } from 'zod';
 import { AppDataSource } from '../data-source';
-import { User } from '../entities';
+import { Address, User } from '../entities';
 import { AppError } from '../errors';
 import { tUserRepo } from '../interfaces/users/users.interfaces';
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
+import { tAddressRepo } from '../interfaces/realEstates/realEstates.interfaces';
 
 const validateInputDataMiddleware = (schema: ZodTypeAny) => (request: Request, response: Response, next: NextFunction): void => {
 	request.body = schema.parse(request.body)
@@ -52,6 +53,14 @@ function validateTokenMiddleware (request: Request, response: Response, next: Ne
 function validateAdminPermissionMiddleware (request: Request, response: Response, next: NextFunction): void {
 	const isAdmin: boolean = request.userPermission.admin
 
+	if (request.baseUrl === '/categories' && !isAdmin) {
+		throw new AppError('Insufficient permission', 403)
+	}
+
+	if (request.baseUrl === '/realEstate' && !isAdmin) {
+		throw new AppError('Insufficient permission', 403)
+	}
+	
 	if (request.method === 'GET' || request.method === 'DELETE') {
 		if (!isAdmin) {
 			throw new AppError('Insufficient permission', 403)
@@ -62,7 +71,7 @@ function validateAdminPermissionMiddleware (request: Request, response: Response
 			throw new AppError('Insufficient permission', 403)
 		}
 	}
-
+	
 	next()
 }
 

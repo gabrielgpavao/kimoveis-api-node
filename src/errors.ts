@@ -16,7 +16,17 @@ export function handleErros (error: Error, request: Request, response: Response,
 	if (error instanceof AppError) {
 		return response.status(error.statusCode).json({message: error.message})
 
-	} else if (error instanceof ZodError) {
+	} else if (error instanceof ZodError) {		
+		const invalidDate: boolean = Object.keys(error.flatten().fieldErrors).includes('date')
+		const invalidHour: boolean = Object.keys(error.flatten().fieldErrors).includes('hour')
+		if (invalidDate && error.errors[0].code === 'custom') {
+			return response.status(400).json({ message: error.flatten().fieldErrors.date?.join() })
+			
+		} else if (invalidHour && error.errors[0].code === 'custom') {
+			return response.status(400).json({ message: error.flatten().fieldErrors.hour?.join() })
+
+		}
+		
 		return response.status(400).json({message: error.flatten().fieldErrors})
 		
 	}

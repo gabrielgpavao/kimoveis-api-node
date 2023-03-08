@@ -6,7 +6,7 @@ import { usersListSchema } from '../../schemas/users.schemas'
 export async function getAllUsersService (): Promise<tOutputUserData[]> {
 	const userRepository: tUserRepo = AppDataSource.getRepository(User)
 
-	const usersList: User[] = await userRepository.find({})
+	const usersList: User[] = await userRepository.find()
 
 	return usersListSchema.parse(usersList)
 }
