@@ -15,8 +15,7 @@ type iCategoryRepo = Repository<Category>;
 type iScheduleRepo = Repository<Schedule>;
 
 const manySchedules = async () => {
-  const realEstateRepo: iRealEstateRepo =
-    AppDataSource.getRepository(RealEstate);
+  const realEstateRepo: iRealEstateRepo = AppDataSource.getRepository(RealEstate);
   const addressRepo: iAddressRepo = AppDataSource.getRepository(Address);
   const userRepo: iUserRepo = AppDataSource.getRepository(User);
   const categoryRepo: iCategoryRepo = AppDataSource.getRepository(Category);
@@ -29,20 +28,41 @@ const manySchedules = async () => {
     admin: true,
   });
 
+  
   const userNotAdmin = userRepo.create({
     name: 'user',
     email: 'user@mail.com',
     password: '1234',
   });
 
+
   await userRepo.save([userAdmin, userNotAdmin]);
+
+  const handleUserAdmin = {
+	id: userAdmin.id,
+	name: userAdmin.name,
+	email: userAdmin.email,
+	admin: userAdmin.admin,
+	createdAt: userAdmin.createdAt,
+	updatedAt: userAdmin.updatedAt,
+	deletedAt: userAdmin.deletedAt
+  }
+  const handleUserNotAdmin = {
+	id: userNotAdmin.id,
+	name: userNotAdmin.name,
+	email: userNotAdmin.email,
+	admin: userNotAdmin.admin,
+	createdAt: userNotAdmin.createdAt,
+	updatedAt: userNotAdmin.updatedAt,
+	deletedAt: userNotAdmin.deletedAt
+  }
 
   const category = await categoryRepo.save({ name: 'Apartamento' });
   const address = await addressRepo.save({
     city: 'São Paulo',
     street: 'Rua das Rosas',
     state: 'SP',
-    zipCode: '000000011',
+    zipCode: '0000011',
   });
 
   const realEstate = await realEstateRepo.save({
@@ -70,11 +90,11 @@ const manySchedules = async () => {
     schedules: [
       {
         ...{ id: schedule1.id, date: schedule1.date, hour: schedule1.hour },
-        user: { ...userAdmin },
+        user: { ...handleUserAdmin },
       },
       {
         ...{ id: schedule2.id, date: schedule2.date, hour: schedule2.hour },
-        user: { ...userNotAdmin },
+        user: { ...handleUserNotAdmin },
       },
     ],
     address,

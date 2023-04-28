@@ -1,4 +1,6 @@
 import { z } from 'zod';
+import { outputRealEstateDataSchema } from './realEstate.schemas'
+import { outputUserDataSchema } from './users.schemas';
 
 const inputScheduleDataSchema = z.object({
 	date: z.string().refine((date: string) => {
@@ -21,12 +23,16 @@ const inputScheduleDataSchema = z.object({
 	realEstateId: z.number().int()
 })
 
-const schedulesList = z.array(inputScheduleDataSchema.extend({
-	id: z.number().int(),
-	userId: z.number().int()
-}))
+const schedulesResponseListSchema = outputRealEstateDataSchema.extend({
+	schedules: z.array(z.object({
+		id: z.number().int(),
+		date: z.string(),
+		hour: z.string(),
+		user: outputUserDataSchema
+	}))
+})
 
 export {
 	inputScheduleDataSchema,
-	schedulesList
+	schedulesResponseListSchema
 }

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { iCreatedScheduleResponse, tInputScheduleData } from '../../interfaces/schedules/schedules.interfaces';
 import { createScheduleService } from '../../services/schedules/createSchedule.service';
 import { getSchedulesService } from '../../services/schedules/getSchedules.service';
+import { schedulesResponseListSchema } from '../../schemas/schedules.schemas';
 
 async function createScheduleController (request: Request, response: Response): Promise<Response> {
 	const userId: number = request.userPermission.id
@@ -18,7 +19,9 @@ async function getSchedulesController (request: Request, response: Response): Pr
 	
 	const schedulesList = await getSchedulesService(realEstateId)
 	
-	return response.status(200).json(schedulesList)
+	const handleSchedulesList = schedulesList ? schedulesResponseListSchema.parse(schedulesList) : {message: 'Atualmente sem agendamentos para esse imóvel'}
+	
+	return response.status(200).json(handleSchedulesList)
 }
 
 export {

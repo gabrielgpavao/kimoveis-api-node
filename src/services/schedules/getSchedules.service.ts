@@ -1,12 +1,9 @@
 import { AppDataSource } from '../../data-source';
-import { RealEstate, Schedule } from '../../entities';
+import { RealEstate } from '../../entities';
 import { AppError } from '../../errors';
 import { tRealEstateRepo } from '../../interfaces/realEstates/realEstates.interfaces';
-import { tScheduleRepo } from '../../interfaces/schedules/schedules.interfaces';
-import { schedulesList } from '../../schemas/schedules.schemas';
 
 export async function getSchedulesService (realEstateId: number) {
-	const scheduleRepository: tScheduleRepo = AppDataSource.getRepository(Schedule)	
 	const realEstateRepository: tRealEstateRepo = AppDataSource.getRepository(RealEstate)	
 
 	const findRealEstate = await realEstateRepository.findOneBy({ id: realEstateId })
