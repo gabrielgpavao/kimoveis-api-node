@@ -185,7 +185,7 @@ O objeto User é definido como:
 
 ---
 
-### 2.1. **Criação de Usuário**
+### 4.2.1. **Criação de Usuário**
 
 [ Voltar para os Endpoints ](#4-endpoints)
 
@@ -394,10 +394,6 @@ Vazio
 ### Exemplo de Response:
 ```
 204 No Content
-```
-
-```
-Vazio
 ```
 
 ### Possíveis Erros:
