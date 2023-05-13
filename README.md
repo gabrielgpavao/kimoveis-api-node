@@ -19,12 +19,13 @@ Aplicação Backend (API) criada para gerenciar os dados de uma imobiliária. É
 
 Principais tecnologias utilizadas:
 
-- [NodeJS](https://nodejs.org/en/)
-- [Express](https://expressjs.com/pt-br/)
+- [Node.js](https://nodejs.org/en/)
+- [Express.js](https://expressjs.com/pt-br/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [PostgreSQL](https://www.postgresql.org/)
 - [TypeORM](https://typeorm.io/)
 - [Zod](https://zod.dev/)
+- [JSON Web Token](https://jwt.io/)
 
 ---
 
